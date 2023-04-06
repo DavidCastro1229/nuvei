@@ -11,6 +11,7 @@ export default async function getAllCards(id){
   const uniq_token_string = appkey + variableTimestamp;
   const uniq_token_hash = require('crypto').createHash('sha256').update(uniq_token_string).digest('hex');
   const auth_token = Buffer.from(appcode + ';' + variableTimestamp + ';' + uniq_token_hash).toString('base64');
+  console.log(auth_token)
   try {
     const card = await axios.get(`https://ccapi-stg.paymentez.com/v2/card/list?uid=${id}`,{
       headers:{
@@ -19,7 +20,7 @@ export default async function getAllCards(id){
       }
     })
     console.log("final fetch",card)
-    return card
+    return card.data.cards
     
   } catch (error) {
     console.log(error.message)
