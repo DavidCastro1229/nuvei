@@ -2,7 +2,7 @@ import axios from 'axios';
 const appcode = process.env.NEXT_PUBLIC_API_PAYMENTEZ_API_CODE_S;
 const appkey = process.env.NEXT_PUBLIC_API_PAYMENTEZ_API_KEY_S;
 
-export default async function getAllCards(id){
+export default async function DeleteCard(id){
   console.log('de get cards function')
   console.log(appcode)
   console.log(appkey)

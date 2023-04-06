@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Cookie from 'js-cookie';
 import jwt from 'jsonwebtoken';
 import { useRouter } from "next/router";
-import axios from 'axios';
-import endPoints from '@services/api';
 import getAllCards from '../getAllCards';
+import DeleteCard from '../deleteCard';
 import styles from '@styles/Paymentez.module.scss';
 const Tarjetas = () => {
   const [email, setEmail] = useState('vacio');
@@ -19,38 +18,44 @@ const Tarjetas = () => {
       // alert('necesitas iniciar session');
       // router.push('/login');
     }
-    console.log('logeado')
-    console.log("de cookie", token)
-    return token;
+    const decodificado = jwt.decode(token, { complete: true });
+    console.log(decodificado)
+    const id = decodificado.payload.sub;
+    return id;
   };
 
   const lookTarjetasHandler = async () => {
     try {
 
       console.log('lookTarjetasHandler ah sido activado!!!');
-      const aynimarUserToken = getCookieUser();
-      const decodificado = jwt.decode(aynimarUserToken, { complete: true });
-      console.log(decodificado)
-      const uId = decodificado.payload.sub;
-      console.log(uId)
-      console.log('antes de declarar funcion');
-      const cardsResponse = await getAllCards(uId);
+      const idUser = getCookieUser();
+      const cardsResponse = await getAllCards(idUser);
       console.log(cardsResponse)
       setCards(cardsResponse)
     } catch (error) {
       console.log('Error: ', error.message);
     }
   };
+  const eliminarCard = (token)=>{
+    const idUser = getCookieUser();
+    const eliminar = DeleteCard(idUser)
+
+  }
 
   return (
     <div>
       <button onClick={() => lookTarjetasHandler()}>ver tarjetas guardadas</button>
       <div>
         {
-          cards.map((c) => {
-            <aside style={{ display: 'flex', width:'100%' }}>
-              <h1>{c.bin}</h1>
+          cards.map((c, i) => {
+            return(
+
+              <aside key={i} style={{ display: 'flex', width:'100%' }}>
+              <h1>Nombre: {c.holder_name}</h1>
+              <h1>Expira: {c.expiry_year}</h1>
+              <button onClick={eliminarCard(c.token)}></button>
             </aside>
+              )
           })
         }
 
