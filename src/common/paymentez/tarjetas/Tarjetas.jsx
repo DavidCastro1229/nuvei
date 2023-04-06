@@ -53,7 +53,7 @@ const Tarjetas = () => {
               <aside key={i} style={{ display: 'flex', width:'100%' }}>
               <h1>Nombre: {c.holder_name}</h1>
               <h1>Expira: {c.expiry_year}</h1>
-              <button onClick={eliminarCard(c.token)}></button>
+              <button onClick={eliminarCard(c.token)}>Eliminar</button>
             </aside>
               )
           })
