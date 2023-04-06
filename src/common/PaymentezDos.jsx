@@ -44,13 +44,13 @@ export default function PaymentezDos({userEmail, uId}) {
       RefButtonSubmit.current.innerText = context;
       RefButtonSubmit.current.removeAttribute('disabled');
     }
-    console.log(RefButtonSubmit)
     let responseCallback = response => {
+
       console.log('entra en exitoso')
       console.log(response)
-      RefResponse.current.innerHTML = JSON.stringify(response);
-      RefButtonRetry.current.style.display = 'block';
+      RefResponse.current.innerHTML = "Tarjeta Guardada con Exito";
       RefButtonSubmit.current.style.display = 'none';
+      RefButtonRetry.current.style.display = 'block';
     }
     const esperaSdk = setInterval(() => {
       console.log('ejecuta interval')
