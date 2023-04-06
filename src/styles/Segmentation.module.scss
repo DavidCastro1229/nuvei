@@ -1,0 +1,57 @@
+@import 'vars';
+
+.Segment-Container {
+    margin-top: 60px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.Segment-Container p {
+    width: 50%;
+    margin: $--lg 0;
+}
+
+.buttonr {
+    display: flex;
+    background: $--morado-centro;
+    padding: 5px;
+    border-radius: 18px;
+    color: white;
+    width: 400px;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonr:hover {
+    background: $--app-green;
+}
+
+.buttonr:active {
+    background: $--soft-green;
+    color: $--black;
+}
+
+.Recycler_segment-container {
+    width: 45%;
+    margin: 2%;
+}
+
+.Customer_segment-container {
+    width: 45%;
+    margin: 2%;
+}
+@media (max-width: 700px) {
+    .Segment-Container {
+        margin-top: 60px;
+        display: flex;
+        flex-flow: column wrap;
+    }
+   .Segment-Container p {
+    width: 100%;
+    margin: $--lg 0;
+	text-align: center;
+   }
+   .Segment-Container h1 {
+    width: 200%;
+   }
+ }

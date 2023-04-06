@@ -1,0 +1,54 @@
+@import 'vars';
+
+.Menu {
+    width: 100%;
+    height: auto;
+    border: 1px solid #DBFFCF;
+    border-radius: 6px;
+    padding: 20px 20px 0 20px;
+    position: fixed;
+    top: 60px;
+    left: 0px;
+    z-index: 1;
+    background-color: white;
+}
+.Menu ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.Menu ul li {
+	text-align: center;
+}
+.Menu ul li:nth-child(1),
+.Menu ul li:nth-child(2) {
+	font-weight: bold;
+}
+.Menu ul li:last-child {
+	padding-top: 14px;
+	border-top: 1px solid $--piel-beige;
+}
+/* .Menu ul li a:last-child {
+	color: $--hospital-green;
+	font-size: $--sm;
+} */
+.Menu ul li a {
+	color: $--black;
+	text-decoration: none;
+	margin-bottom: 20px;
+	display: inline-block;
+}
+.Menu ul li button {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border: none;
+	border-top-left-radius: 50%;
+	border-top-right-radius: 50%;
+	color: $--black;
+	text-decoration: none;
+	margin-bottom: 20px;
+	display: inline-block;
+	cursor: pointer;
+	color: $--plomo-cafe;
+	background: $--very-very-light-pink;
+}
