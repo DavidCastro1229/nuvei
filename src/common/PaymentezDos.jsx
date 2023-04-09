@@ -1,13 +1,13 @@
 import '@styles/prueba.module.css'
+import { Button } from 'primereact/button';
 import React from 'react';
 
-export default function PaymentezDos({userEmail, uId}) {
+export default function PaymentezDos({ userEmail, uId }) {
 
-  console.log("de paymetenz", userEmail, uId)
   const [credencial, setCredencial] = React.useState({
     environment: 'stg',
     application_code: process.env.NEXT_PUBLIC_API_PAYMENTEZ_API_CODE,
-    application_key:process.env.NEXT_PUBLIC_API_PAYMENTEZ_API_KEY,
+    application_key: process.env.NEXT_PUBLIC_API_PAYMENTEZ_API_KEY,
 
   }
   )
@@ -23,7 +23,6 @@ export default function PaymentezDos({userEmail, uId}) {
   }, [RefButtonSubmit.current])
   async function start() {
     let get_tokenize_data = () => {
-      console.log("aaaaaaaa ",uId, userEmail)
       let data = {
         locale: 'en',
         user: {
@@ -38,7 +37,6 @@ export default function PaymentezDos({userEmail, uId}) {
     }
 
     let notCompletedFormCallback = message => {
-      console.log('falla')
 
       RefResponse.current.innerHTML = `Not completed form: ${message}, Please fill required data`;
       RefButtonSubmit.current.innerText = context;
@@ -46,19 +44,13 @@ export default function PaymentezDos({userEmail, uId}) {
     }
     let responseCallback = response => {
 
-      console.log('entra en exitoso')
-      console.log(response)
       RefResponse.current.innerHTML = "Tarjeta Guardada con Exito";
       RefButtonSubmit.current.style.display = 'none';
       RefButtonRetry.current.style.display = 'block';
     }
     const esperaSdk = setInterval(() => {
-      console.log('ejecuta interval')
-      console.log(typeof PaymentGateway)
       if (typeof PaymentGateway === 'function') {
         clearInterval(esperaSdk)
-        console.log(typeof PaymentGateway)
-        console.log('para interval')
 
         let pg_sdk = new PaymentGateway(
           credencial.environment,
@@ -86,13 +78,13 @@ export default function PaymentezDos({userEmail, uId}) {
 
 
   return (
-    <main className="container alto50 mt-5">
+    <main className="container mb-5 d-flex justify-content-center">
 
-      <div id='payment_example_div'>
+      <div id='payment_example_div container'>
         <div id='tokenize_example'></div>
         <div id="response" ref={RefResponse}></div>
-        <button id='tokenize_btn' ref={RefButtonSubmit} class='tok_btn'>Save card</button>
-        <button id='retry_btn' ref={RefButtonRetry} class='tok_btn' display='none'>Save new card</button>
+        <Button id='tokenize_btn' ref={RefButtonSubmit} class='tok_btn'>Save card</Button>
+        <Button id='retry_btn' ref={RefButtonRetry} class='tok_btn container' display='none'>Save new card</Button>
       </div>
 
     </main>

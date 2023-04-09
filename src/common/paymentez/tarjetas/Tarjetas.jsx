@@ -1,63 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import Cookie from 'js-cookie';
-import jwt from 'jsonwebtoken';
-import { useRouter } from "next/router";
+import React, { useState } from 'react';
 import getAllCards from '../getAllCards';
-import DeleteCard from '../deleteCard';
-import styles from '@styles/Paymentez.module.scss';
-const Tarjetas = () => {
-  const [email, setEmail] = useState('vacio');
+import TablaCards from './tablaCards';
+import { Button } from 'primereact/button';
+import Refund from '../refund';
+const Tarjetas = ({ userEmail, uId }) => {
   const [cards, setCards] = useState([])
-
-  const router = useRouter();
-  // const [uId, setuId] = useState(undefined)
-  const getCookieUser = () => {
-    const token = Cookie.get('token');
-    if (!token) {
-      return console.log('no logueado')
-      // alert('necesitas iniciar session');
-      // router.push('/login');
-    }
-    const decodificado = jwt.decode(token, { complete: true });
-    console.log(decodificado)
-    const id = decodificado.payload.sub;
-    return id;
-  };
+  const [estado, setEstado] = useState(false)
 
   const lookTarjetasHandler = async () => {
     try {
-
-      console.log('lookTarjetasHandler ah sido activado!!!');
-      const idUser = getCookieUser();
-      const cardsResponse = await getAllCards(idUser);
+      console.log('Ver todas las tarjetas guardadas');
+      const cardsResponse = await getAllCards(uId);
       console.log(cardsResponse)
       setCards(cardsResponse)
+      setEstado(true)
     } catch (error) {
       console.log('Error: ', error.message);
     }
   };
-  const eliminarCard = async (token)=>{
-    const idUser = getCookieUser();
-    const eliminar = await DeleteCard(token, idUser)
-    console.log(eliminar)
-  }
-
   return (
-    <div>
-      <button onClick={() => lookTarjetasHandler()}>ver tarjetas guardadas</button>
+    <div className='container'>
+      <Button onClick={() => lookTarjetasHandler()} className='mb-2' severity='info'>Ver Tarjetas</Button>
       <div>
-        {
-          cards.map((c, i) => {
-            return(
 
-              <aside key={i} style={{ display: 'flex', width:'100%' }}>
-              <h1>Nombre: {c.holder_name}</h1>
-              <h1>Expira: {c.expiry_year}</h1>
-              <button onClick={()=>eliminarCard(c.token)}>Eliminar</button>
-            </aside>
-              )
-          })
+        {
+          estado && <TablaCards cards={cards} uId={uId} email={userEmail} />
         }
+        <h1>Compras resientes</h1>
+        <Button onClick={() => Refund('idDeTransacion')}>Devolucion</Button>
 
       </div>
     </div>
